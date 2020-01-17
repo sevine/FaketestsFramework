@@ -1,4 +1,6 @@
 using NUnit.Framework;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 
 namespace Tests
 {
@@ -12,7 +14,19 @@ namespace Tests
         [Test]
         public void Test1()
         {
-            Assert.That(1 > 2, Is.True, "Неверный hgtpekmfndfs");
+            IWebDriver browser = new ChromeDriver();
+
+            browser.Navigate().GoToUrl("https://www.dating.com/");
+            string etalonSlogan = "Your World. Your Love.";
+
+
+            string realSlogan = browser.FindElement(By.CssSelector("h1  l10n")).Text;
+
+            Assert.That(browser.Title, Does.Contain("Dating"), "Кривой title");
+            Assert.That(etalonSlogan, Is.EqualTo(realSlogan), "Кривой слоган");
+
         }
+
+      
     }
 }
